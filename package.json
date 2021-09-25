@@ -1,7 +1,7 @@
 {
   "name": "@webmuds/core",
   "version": "0.0.0",
-  "description": "Core objects for Javascript projects",
+  "description": "Core objects for WebMUDs Javascript projects",
   "type": "module",
   "scripts": {
     "test": "npm run lint && NODE_ENV=test c8 mocha",

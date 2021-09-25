@@ -6,31 +6,27 @@ import EventEmitter from 'eventemitter3'
 import { RequestError } from './errors/RequestError.js'
 import { Payload } from './Payload.js'
 
-import $logger from '../config/logger.js'
-
 /**
  * Base Resource class.
  */
 export class Resource extends EventEmitter {
   /**
-   * Resource path from API, used to generate the endpoint.
-   * Defined by subclasses.
-   * E.g., "muds"
+   * Resource path from API without the ID, used to generate the endpoint.
+   * E.g., "muds", "muds/1/characters", etc
    * @type {string}
    */
   path = null
 
   /**
-   * API endpoint (path + endpoint, e.g., "/muds/1").
+   * API endpoint (path + ID, e.g., "/muds/1", "/muds/1/characters/2", etc).
    * Generated in the constructor. Subclasses can extend the constructor to customize this value.
    * @type {string}
    */
   endpoint = null
 
   /**
-   * Shareable resource data is stored here.
+   * Shareable payload for this resource.
    * Key names are shorthand versions of property names.
-   * This object gets sent around between server/clients/workers.
    * @type {object}
    */
   payload = null
@@ -42,7 +38,7 @@ export class Resource extends EventEmitter {
   $api = null
 
   /**
-   * Log namespace.
+   * Namespace. Can be used as a readable global identifier.
    * @type {string}
    */
   namespace = null
@@ -102,24 +98,27 @@ export class Resource extends EventEmitter {
 
   /**
    * Downloads data from API and returns it.
+   * Emits 'downloaded' with resource, downloaded data, and download duration.
    * @return {Promise<object>}
    */
   async download () {
+    var start = Date.now()
+
     try {
-      var start = Date.now()
       var response = await this.$api.get(this.endpoint)
-      $logger.namespaced(this.namespace, 'debug', '>', 'Downloaded in', Date.now() - start, 'ms')
     } catch (e) {
       throw new RequestError(e)
     }
 
-    return response.data
+    var data = response.data
+    this.emit('downloaded', this, data, Date.now() - start)
+
+    return data
   }
 
   /**
    * Fills this instance with data.
-   * Subclasses should extend this method
-   * mapping API fields to instance properties.
+   * Subclasses should extend this method mapping API fields to instance properties.
    * @param {object} data
    * @return {void}
    */
@@ -129,29 +128,25 @@ export class Resource extends EventEmitter {
 
   /**
    * Patches the API resource and returns the response.
+   * Emits 'patched' with resource, response from API call, and request duration.
    * @param {object} data
    * @return {Promise<object>}
    */
   async patch (data) {
     var start = Date.now()
     var response
+
     try {
       response = await this.$api.patch(this.endpoint, data)
     } catch (e) {
       throw new RequestError(e)
     }
 
-    $logger.namespaced(this.namespace, 'debug', '>', 'Patched in', Date.now() - start, 'ms', data)
+    var responseData = response.data
 
-    return response.data
-  }
+    this.emit('patched', this, responseData, Date.now() - start)
 
-  /**
-   * @param {string} message
-   * @param {string} level
-   */
-  log (message, level = 'log') {
-    return $logger.namespaced(this.namespace, level, '>', message)
+    return responseData
   }
 }
 

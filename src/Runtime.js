@@ -3,12 +3,15 @@
 'use strict'
 
 /**
+ * @template {Resource} ResourceType
+ *
  * Base runtime class.
  */
 export class Runtime {
   /**
    * Resource this Runtime is attached to.
-   * @type {Resource}
+   * Subclasses can determine the Resource subclass by using `extends`.
+   * @type {ResourceType}
    */
   resource = null
 
@@ -26,7 +29,7 @@ export class Runtime {
   _isRuntime = true
 
   /**
-   * @param {Resource} resource - Resource this Runtime is attached to.
+   * @param {ResourceType} resource - Resource this Runtime is attached to.
    * @param {string} [namespace] - Runtime namespace, defined by subclasses.
    */
   constructor (resource, namespace) {

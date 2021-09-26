@@ -11,46 +11,6 @@ import { Payload } from './Payload.js'
  */
 export class Resource extends EventEmitter {
   /**
-   * Resource path from API without the ID, used to generate the endpoint.
-   * E.g., "muds", "muds/1/characters", etc
-   * @type {string}
-   */
-  path = null
-
-  /**
-   * API endpoint (path + ID, e.g., "/muds/1", "/muds/1/characters/2", etc).
-   * Generated in the constructor. Subclasses can extend the constructor to customize this value.
-   * @type {string}
-   */
-  endpoint = null
-
-  /**
-   * Shareable payload for this resource.
-   * Key names are shorthand versions of property names.
-   * @type {object}
-   */
-  payload = null
-
-  /**
-   * External API client (provided by @webmuds/api-client).
-   * @type {ApiClient}
-   */
-  $api = null
-
-  /**
-   * Namespace. Can be used as a readable global identifier.
-   * @type {string}
-   */
-  namespace = null
-
-  /**
-   * Utility flag for performance.
-   * @constant
-   * @type {boolean}
-   */
-  _isResource = true
-
-  /**
    * @param {number} id
    * @param {string} path
    * @param {ApiClient} $api
@@ -63,14 +23,45 @@ export class Resource extends EventEmitter {
     if (!path) { throw new Error('[Resource] path not provided') }
     if (!$api) { throw new Error('[Resource] API instance not provided') }
 
-    // Payload must be set before setting the ID.
+    /**
+     * Shareable payload for this resource.
+     * Key names are shorthand versions of property names.
+     * @type {object}
+     */
     this.payload = payload || new Payload()
-    this.id = id
+    this.id = id // Will set the ID in the Payload
 
+    /**
+     * Resource path from API without the ID, used to generate the endpoint.
+     * E.g., "muds", "muds/1/characters", etc
+     * @type {string}
+     */
     this.path = path
-    this.endpoint = `${this.path}/${this.id}`
+
+    /**
+     * External API client (provided by @webmuds/api-client).
+     * @type {ApiClient}
+     */
     this.$api = $api
 
+    /**
+     * API endpoint (path + ID, e.g., "/muds/1", "/muds/1/characters/2", etc).
+     * Generated in the constructor. Subclasses can extend the constructor to customize this value.
+     * @type {string}
+     */
+    this.endpoint = `${this.path}/${this.id}`
+
+    /**
+     * Utility flag for performance.
+     * @readonly
+     * @type {boolean}
+     */
+    this._isResource = true
+
+    /**
+     * Namespace. Can be used as a readable global identifier.
+     * @type {string}
+     */
     this.namespace = `Resource<${this.path}>#${this.id}`
   }
 

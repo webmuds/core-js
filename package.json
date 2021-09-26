@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/webmuds/core-js#readme",
   "dependencies": {
-    "eventemitter3": "^4.0.7"
+    "eventemitter3": "4.0.7"
   },
   "devDependencies": {
     "@dimensionalpocket/development": "github:dimensionalpocket/development-js#0.4.0",

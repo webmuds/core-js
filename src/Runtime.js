@@ -2,6 +2,8 @@
 
 'use strict'
 
+import $logger from '../config/logger.js'
+
 /**
  * @template {Resource} ResourceType
  *
@@ -41,6 +43,14 @@ export class Runtime {
    * @return {number}
    */
   get id () { return this.resource?.id }
+
+  /**
+   * @param {string} level
+   * @param  {...any} args
+   */
+  log (level, ...args) {
+    $logger.log(level, this.namespace, ...args)
+  }
 }
 
 /**

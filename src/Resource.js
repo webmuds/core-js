@@ -6,6 +6,8 @@ import EventEmitter from 'eventemitter3'
 import { RequestError } from './errors/RequestError.js'
 import { Payload } from './Payload.js'
 
+import $logger from '../config/logger.js'
+
 /**
  * Base Resource class.
  */
@@ -94,17 +96,17 @@ export class Resource extends EventEmitter {
    */
   async download () {
     var start = Date.now()
+    var responseData
 
     try {
-      var response = await this.$api.get(this.endpoint)
+      responseData = await this.$api.get(this.endpoint)
     } catch (e) {
       throw new RequestError(e)
     }
 
-    var data = response.data
-    this.emit('downloaded', this, data, Date.now() - start)
+    this.emit('downloaded', this, responseData, Date.now() - start)
 
-    return data
+    return responseData
   }
 
   /**
@@ -125,19 +127,25 @@ export class Resource extends EventEmitter {
    */
   async patch (data) {
     var start = Date.now()
-    var response
+    var responseData
 
     try {
-      response = await this.$api.patch(this.endpoint, data)
+      responseData = await this.$api.patch(this.endpoint, data)
     } catch (e) {
       throw new RequestError(e)
     }
 
-    var responseData = response.data
-
     this.emit('patched', this, responseData, Date.now() - start)
 
     return responseData
+  }
+
+  /**
+   * @param {string} level
+   * @param  {...any} args
+   */
+  log (level, ...args) {
+    $logger.log(level, this.namespace, ...args)
   }
 }
 

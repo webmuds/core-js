@@ -33,7 +33,7 @@ export class Collection extends Map {
    */
   validate (object) {
     if (!object || !object.id) {
-      $logger.global('error', this.constructor.name, '#add() called with invalid object', object)
+      $logger.error(this.constructor.name, '#add() called with invalid object', object)
       return false
     }
 

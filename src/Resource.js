@@ -6,6 +6,8 @@ import EventEmitter from 'eventemitter3'
 import { RequestError } from './errors/RequestError.js'
 import { Payload } from './Payload.js'
 
+import $logger from '../config/logger.js'
+
 /**
  * Base Resource class.
  */
@@ -138,6 +140,14 @@ export class Resource extends EventEmitter {
     this.emit('patched', this, responseData, Date.now() - start)
 
     return responseData
+  }
+
+  /**
+   * @param {string} level
+   * @param  {...any} args
+   */
+  log (level, ...args) {
+    $logger.log(level, this.namespace, ...args)
   }
 }
 

@@ -2,12 +2,21 @@
 
 'use strict'
 
-import { expect } from '@dimensionalpocket/development'
+import { expect, sinon } from '@dimensionalpocket/development'
 import { Collection } from '../src/Collection.js'
 
 import $logger from '../config/logger.js'
 
 describe('Collection', function () {
+  before(function () {
+    sinon.stub($logger, 'log')
+  })
+
+  after(function () {
+    // @ts-ignore
+    $logger.log.restore()
+  })
+
   describe('#add', function () {
     context('with an object with an id', function () {
       before(function () {
@@ -59,8 +68,7 @@ describe('Collection', function () {
       })
 
       it('logs the error', function () {
-        var entry = $logger.messages[$logger.messages.length - 1]
-        expect(entry).to.have.deep.members(['E', 'Collection', '#add() called with invalid object', this.object])
+        expect($logger.log).to.have.been.calledWith('error', 'Collection', '#add() called with invalid object', this.object)
       })
     })
   })

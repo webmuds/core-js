@@ -1,6 +1,6 @@
 {
   "name": "@webmuds/core",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Core objects for WebMUDs Javascript projects",
   "type": "module",
   "scripts": {

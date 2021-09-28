@@ -57,7 +57,7 @@ export class Runtime extends EventEmitter {
    * @param {number} duration - Duration in milliseconds.
    */
   onResourceDownload (resource, _data, duration) {
-    resource.log('info', 'Downloaded in', duration, 'ms')
+    resource.log('info', '> GET in', duration, 'ms')
   }
 
   /**
@@ -67,7 +67,7 @@ export class Runtime extends EventEmitter {
    * @param {number} duration - Duration in milliseconds.
    */
   onResourcePatch (resource, _data, duration) {
-    resource.log('info', 'Patched in', duration, 'ms')
+    resource.log('info', '> PATCH in', duration, 'ms')
   }
 
   /**

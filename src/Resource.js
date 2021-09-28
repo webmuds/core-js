@@ -64,7 +64,7 @@ export class Resource extends EventEmitter {
      * Namespace. Can be used as a readable global identifier.
      * @type {string}
      */
-    this.namespace = `Resource<${this.path}>#${this.id}`
+    this.namespace = `Resource:/${this.endpoint}`
   }
 
   /**

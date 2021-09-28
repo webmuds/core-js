@@ -19,11 +19,11 @@ export class Resource extends EventEmitter {
    * @param {object} [payload] - Payload instance to use, defaults to base Payload instance
    */
   constructor (id, path, $api, payload = null) {
-    super()
-
     if (!id) { throw new Error('[Resource] ID not provided') }
     if (!path) { throw new Error('[Resource] path not provided') }
     if (!$api) { throw new Error('[Resource] API instance not provided') }
+
+    super()
 
     /**
      * Shareable payload for this resource.

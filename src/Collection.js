@@ -37,7 +37,7 @@ export class Collection extends Map {
       return false
     }
 
-    var exists = this.get(object.id)
+    var exists = this.has(object.id)
 
     return !exists
   }

@@ -21,10 +21,19 @@ export class TimerCollection extends Collection {
   }
 
   stop () {
-    this.forEach(this.stopOne)
+    this.forEach(this.stopOne, this)
   }
 
   stopOne (timer) {
     timer.stop()
+  }
+
+  dispose () {
+    this.forEach(this.disposeOne, this)
+  }
+
+  disposeOne (timer) {
+    timer.dispose()
+    this.delete(timer.id)
   }
 }

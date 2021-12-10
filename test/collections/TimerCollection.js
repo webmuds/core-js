@@ -21,4 +21,15 @@ describe('collections/TimerCollection', function () {
       expect(this.collection.get('timerId')).to.eq(this.timer)
     })
   })
+
+  describe('#dispose', function () {
+    it('removes all timers from collection', function () {
+      var timers = new TimerCollection()
+      timers.create({ id: 'Timer1' })
+      timers.create({ id: 'Timer2' })
+      timers.dispose()
+      expect(timers.get('Timer1')).to.eq(undefined)
+      expect(timers.get('Timer2')).to.eq(undefined)
+    })
+  })
 })

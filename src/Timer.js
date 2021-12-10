@@ -1,8 +1,8 @@
-import Timer from '@dimensionalpocket/timer'
+import DpTimer from '@dimensionalpocket/timer'
 
 var nextId = 0
 
-export class TimerWithId extends Timer {
+export class Timer extends DpTimer {
   constructor (options = null) {
     super(options)
 

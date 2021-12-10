@@ -3,12 +3,12 @@
 'use strict'
 
 import { expect, sinon } from '@dimensionalpocket/development'
-import { TimerWithId } from '../src/TimerWithId.js'
+import { Timer } from '../src/Timer.js'
 
-describe('TimerWithId', function () {
+describe('Timer', function () {
   before(function () {
     this.clock = sinon.useFakeTimers()
-    this.timer = new TimerWithId({ id: 'abc', duration: 5000 })
+    this.timer = new Timer({ id: 'abc', duration: 5000 })
   })
 
   after(function () {
@@ -25,7 +25,7 @@ describe('TimerWithId', function () {
 
   context('when an id is not provided', function () {
     it('uses an automatic ID', function () {
-      var timer = new TimerWithId()
+      var timer = new Timer()
       expect(timer.id).to.eq('Timer1')
     })
   })

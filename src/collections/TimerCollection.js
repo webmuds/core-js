@@ -5,11 +5,11 @@ export class TimerCollection extends Collection {
   /**
    * Creates and returns a Timer instance.
    *
-   * @param {string} timerId
+   * @param {object}
    * @returns
    */
-  create (timerId) {
-    var timer = new Timer({ id: timerId })
+  create (options) {
+    var timer = new Timer(options)
     this.add(timer)
 
     return timer

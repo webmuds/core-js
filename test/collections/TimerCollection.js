@@ -10,7 +10,7 @@ describe('collections/TimerCollection', function () {
   describe('#create', function () {
     before(function () {
       this.collection = new TimerCollection()
-      this.timer = this.collection.create('timerId')
+      this.timer = this.collection.create({ id: 'timerId' })
     })
 
     it('creates the timer', function () {

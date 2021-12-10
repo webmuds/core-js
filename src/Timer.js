@@ -14,4 +14,9 @@ export class Timer extends DpTimer {
      */
     this.id = options?.id || `Timer${++nextId}`
   }
+
+  dispose () {
+    this.stop()
+    this.removeAllListeners()
+  }
 }

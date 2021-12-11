@@ -25,8 +25,10 @@ describe('collections/TimerCollection', function () {
   describe('#dispose', function () {
     it('removes all timers from collection', function () {
       var timers = new TimerCollection()
-      timers.create({ id: 'Timer1' })
-      timers.create({ id: 'Timer2' })
+      var t1 = timers.create({ id: 'Timer1' })
+      var t2 = timers.create({ id: 'Timer2' })
+      expect(timers.get('Timer1')).to.eq(t1)
+      expect(timers.get('Timer2')).to.eq(t2)
       timers.dispose()
       expect(timers.get('Timer1')).to.eq(undefined)
       expect(timers.get('Timer2')).to.eq(undefined)

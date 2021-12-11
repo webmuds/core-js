@@ -20,8 +20,16 @@ export class TimerCollection extends Collection {
     return timer
   }
 
+  start () {
+    this.forEach(this.startOne)
+  }
+
+  startOne (timer) {
+    timer.start()
+  }
+
   stop () {
-    this.forEach(this.stopOne, this)
+    this.forEach(this.stopOne)
   }
 
   stopOne (timer) {

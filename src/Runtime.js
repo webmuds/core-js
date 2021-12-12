@@ -3,6 +3,7 @@
 'use strict'
 
 import EventEmitter from 'eventemitter3'
+import { TimerCollection } from './collections/TimerCollection.js'
 
 import $logger from '../config/logger.js'
 
@@ -35,6 +36,12 @@ export class Runtime extends EventEmitter {
      * @type {string}
      */
     this.namespace = namespace || `Runtime[${resource.namespace}]`
+
+    /**
+     * A collection of timers for running Runtime tasks.
+     * @type {TimerCollection}
+     */
+    this.timers = new TimerCollection()
 
     /**
      * Utility flag for performance.

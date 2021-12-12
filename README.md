@@ -16,7 +16,7 @@ Resources are objects that represent API records. Each Resource points to an API
 
 ### `Payload`
 
-Payload instances are minimal objects that store data and can be transferred over channels (including Websocket connections). Payload classes map shorthand property names to their full names from the API. Payload instances are used internally by Resource instances to store data.
+Payload instances are JSON-compatible minimal objects that store data and can be transferred over channels (including Websocket connections). Payload classes map shorthand property names to their full names from the API. Payload instances are used internally by Resource instances to store data.
 
 ### `Collection`
 

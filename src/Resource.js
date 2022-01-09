@@ -91,7 +91,7 @@ export class Resource extends EventEmitter {
 
   /**
    * Downloads data from API and returns it.
-   * Emits 'downloaded' with resource, downloaded data, and download duration.
+   * On success, emits 'downloaded' with resource, downloaded data, and download duration.
    * @return {Promise<object>}
    */
   async download () {
@@ -101,6 +101,7 @@ export class Resource extends EventEmitter {
     try {
       responseData = await this.$api.get(this.endpoint)
     } catch (e) {
+      this.log('error', e, this)
       throw new RequestError(e)
     }
 
@@ -132,6 +133,7 @@ export class Resource extends EventEmitter {
     try {
       responseData = await this.$api.patch(this.endpoint, data)
     } catch (e) {
+      this.log('error', e, this)
       throw new RequestError(e)
     }
 
@@ -145,7 +147,7 @@ export class Resource extends EventEmitter {
    * @param  {...any} args
    */
   log (level, ...args) {
-    $logger.log(level, this.namespace, ...args)
+    this.emit('log', level, this.namespace, ...args)
   }
 }
 

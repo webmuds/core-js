@@ -13,18 +13,18 @@ import mud1 from '@webmuds/api-mock/data/samples/muds/1.js'
 // Shared examples
 import { itBehavesLikeAResource } from './shared/it-behaves-like-a-resource.js'
 
-const $api = new ApiClient('http://webmuds.test')
+const api = new ApiClient('http://webmuds.test')
 
 describe('Resource', function () {
   before(function () {
-    this.resource = new Resource(123, 'resources', $api)
+    this.resource = new Resource(123, 'resources', api)
   })
 
   itBehavesLikeAResource()
 
   describe('constructor', function () {
     it('initializes with correct arguments', function () {
-      expect(this.resource.$api).to.equal($api)
+      expect(this.resource.api).to.equal(api)
       expect(this.resource.path).to.equal('resources')
       expect(this.resource.endpoint).to.equal('resources/123')
     })
@@ -40,7 +40,7 @@ describe('Resource', function () {
     before(function () {
       this.apiMock = new ApiMock('http://webmuds.test')
       this.apiMock.start()
-      this.resource = new Resource(1, 'muds', $api)
+      this.resource = new Resource(1, 'muds', api)
     })
 
     after(function () {

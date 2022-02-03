@@ -10,10 +10,6 @@ Core objects for WebMUDs Javascript projects.
 
 The base Runtime class. Runtime classes are responsible for game logic around a certain resource. E.g., Mud runtimes handle mud-wide logic, Character runtimes handle character-only logic, etc.
 
-Events:
-
-* `log (level, namespace, ...args)`
-
 ### `Resource`
 
 Resources are objects that represent API records. Each Resource points to an API endpoint, and data can be downloaded and updated.
@@ -23,7 +19,6 @@ Events:
 * `downloaded (resource, data, duration)`
 * `patched (resource, data, duration)`
 * `error (error, resource)`
-* `log (level, namespace, ...args)`
 
 ### `Payload`
 

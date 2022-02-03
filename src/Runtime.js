@@ -5,6 +5,8 @@
 import EventEmitter from 'eventemitter3'
 import { TimerCollection } from './collections/TimerCollection.js'
 
+import $logger from '../config/logger.js'
+
 /**
  * @template {Resource} R - Resource class this runtime handles.
  *
@@ -22,7 +24,6 @@ export class Runtime extends EventEmitter {
 
     /**
      * Resource this Runtime is attached to.
-     * Subclasses can determine the Resource subclass by using `extends`.
      * @type {R}
      */
     this.resource = resource
@@ -35,7 +36,8 @@ export class Runtime extends EventEmitter {
 
     /**
      * A collection of timers for running Runtime tasks.
-     * Subclasses can decide to initialize this property with a TimerCollection.
+     * Subclasses can later decide to initialize this property with a TimerCollection.
+     * It defaults to null to avoid unnecessary allocations.
      * @type {?TimerCollection}
      */
     this.timers = null
@@ -59,7 +61,7 @@ export class Runtime extends EventEmitter {
    * @param  {...any} args
    */
   log (level, ...args) {
-    this.emit('log', level, this.namespace, ...args)
+    $logger.log(level, this.namespace, ...args)
   }
 }
 

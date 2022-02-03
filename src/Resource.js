@@ -151,7 +151,7 @@ export class Resource extends EventEmitter {
    * @param  {...any} args
    */
   log (level, ...args) {
-    this.emit('log', level, this.namespace, ...args)
+    $logger.log(level, this.namespace, ...args)
   }
 }
 

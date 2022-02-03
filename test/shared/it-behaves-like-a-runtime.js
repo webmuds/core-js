@@ -1,5 +1,4 @@
 import { expect } from '@dimensionalpocket/development'
-import { TimerCollection } from '../../src/collections/TimerCollection.js'
 
 /**
  * Requires `this.runtime` to be set.

@@ -3,7 +3,6 @@
 'use strict'
 
 import EventEmitter from 'eventemitter3'
-import { TimerCollection } from './collections/TimerCollection.js'
 
 import $logger from '../config/logger.js'
 
@@ -67,4 +66,5 @@ export class Runtime extends EventEmitter {
 
 /**
  * @typedef { import("./Resource").Resource } Resource
+ * @typedef { import("./collections/TimerCollection").TimerCollection } TimerCollection
  */

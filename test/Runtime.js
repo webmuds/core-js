@@ -10,11 +10,11 @@ import { ApiClient } from '@webmuds/api-client/src/ApiClient.js'
 // Shared examples
 import { itBehavesLikeARuntime } from './shared/it-behaves-like-a-runtime.js'
 
-const $api = new ApiClient()
+const api = new ApiClient()
 
 describe('Runtime', function () {
   before(function () {
-    this.resource = new Resource(123, 'resources', $api)
+    this.resource = new Resource(123, 'resources', api)
   })
 
   describe('shared behavior', function () {

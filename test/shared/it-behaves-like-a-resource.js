@@ -9,9 +9,9 @@ import { expect } from '@dimensionalpocket/development'
  */
 export function itBehavesLikeAResource () {
   describe('constructor', function () {
-    it('initializes ID and $api', function () {
+    it('initializes ID and api', function () {
       expect(this.resource.id).to.exist
-      expect(this.resource.$api).to.exist
+      expect(this.resource.api).to.exist
     })
   })
 

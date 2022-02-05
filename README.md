@@ -14,13 +14,19 @@ The base Runtime class. Runtime classes are responsible for game logic around a 
 
 Resources are objects that represent API records. Each Resource points to an API endpoint, and data can be downloaded and updated.
 
+Events: 
+
+* `downloaded (resource, data, duration)`
+* `patched (resource, data, duration)`
+* `error (error, resource)`
+
 ### `Payload`
 
-Payload instances are JSON-compatible minimal objects that store data and can be transferred over channels (including Websocket connections). Payload classes map shorthand property names to their full names from the API. Payload instances are used internally by Resource instances to store data.
+Payload instances are minimal JSON-friendly objects that store data and can be transferred over channels (including Websocket connections). Payload classes map shorthand property names to their full names from the API. Payload instances are used internally by Resource instances to store data.
 
 ### `Collection`
 
-An opinionated `Map` extension that only adds objects that have an `id` property. Those collections are extensively used across the codebase to standardize object lookup by ID.
+A Collection is an opinionated `Map` extension that only adds objects that have an `id` property. Those collections are extensively used across the codebase to standardize object lookup by ID.
 
 ### `Logger`
 

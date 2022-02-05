@@ -15,13 +15,13 @@ export class Resource extends EventEmitter {
   /**
    * @param {number} id
    * @param {string} path
-   * @param {ApiClient} $api
+   * @param {ApiClient} api
    * @param {object} [payload] - Payload instance to use, defaults to base Payload instance
    */
-  constructor (id, path, $api, payload = null) {
+  constructor (id, path, api, payload = null) {
     if (!id) { throw new Error('[Resource] ID not provided') }
     if (!path) { throw new Error('[Resource] path not provided') }
-    if (!$api) { throw new Error('[Resource] API instance not provided') }
+    if (!api) { throw new Error('[Resource] API instance not provided') }
 
     super()
 
@@ -44,7 +44,7 @@ export class Resource extends EventEmitter {
      * External API client (provided by @webmuds/api-client).
      * @type {ApiClient}
      */
-    this.$api = $api
+    this.api = api
 
     /**
      * API endpoint (path + ID, e.g., "/muds/1", "/muds/1/characters/2", etc).
@@ -91,16 +91,21 @@ export class Resource extends EventEmitter {
 
   /**
    * Downloads data from API and returns it.
-   * Emits 'downloaded' with resource, downloaded data, and download duration.
+   * On success, emits 'downloaded' with resource, downloaded data, and download duration.
+   *
+   * @param {object} [params] - Query parameters
+   * @param {object} [config] - Optional query config object
+   *
    * @return {Promise<object>}
    */
-  async download () {
+  async download (params = null, config = null) {
     var start = Date.now()
     var responseData
 
     try {
-      responseData = await this.$api.get(this.endpoint)
+      responseData = await this.api.get(this.endpoint, params, config)
     } catch (e) {
+      this.log('error', e, this)
       throw new RequestError(e)
     }
 
@@ -130,8 +135,9 @@ export class Resource extends EventEmitter {
     var responseData
 
     try {
-      responseData = await this.$api.patch(this.endpoint, data)
+      responseData = await this.api.patch(this.endpoint, data)
     } catch (e) {
+      this.log('error', e, this)
       throw new RequestError(e)
     }
 

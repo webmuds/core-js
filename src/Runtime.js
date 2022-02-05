@@ -3,33 +3,29 @@
 'use strict'
 
 import EventEmitter from 'eventemitter3'
-import { TimerCollection } from './collections/TimerCollection.js'
 
 import $logger from '../config/logger.js'
 
 /**
- * @template {Resource} ResourceType
+ * @template {Resource} R - Resource class this runtime handles.
  *
  * Base runtime class.
  */
 export class Runtime extends EventEmitter {
   /**
-   * @param {ResourceType} resource - Resource this Runtime is attached to.
+   * @param {R} resource - Resource this Runtime is attached to.
    * @param {string} [namespace] - Runtime namespace, defined by subclasses.
    */
-  constructor (resource, namespace) {
+  constructor (resource, namespace = null) {
     if (!resource?._isResource) { throw new Error('[Runtime] resource argument is not a Resource instance') }
 
     super()
 
     /**
      * Resource this Runtime is attached to.
-     * Subclasses can determine the Resource subclass by using `extends`.
-     * @type {ResourceType}
+     * @type {R}
      */
     this.resource = resource
-    resource.on('downloaded', this.onResourceDownload, this)
-    resource.on('patched', this.onResourcePatch, this)
 
     /**
      * Namespace. Can be used as a readable global identifier.
@@ -39,9 +35,11 @@ export class Runtime extends EventEmitter {
 
     /**
      * A collection of timers for running Runtime tasks.
-     * @type {TimerCollection}
+     * Subclasses can later decide to initialize this property with a TimerCollection.
+     * It defaults to null to avoid unnecessary allocations.
+     * @type {?TimerCollection}
      */
-    this.timers = new TimerCollection()
+    this.timers = null
 
     /**
      * Utility flag for performance.
@@ -58,26 +56,6 @@ export class Runtime extends EventEmitter {
   get id () { return this.resource?.id }
 
   /**
-   * Called when the resource is downloaded.
-   * @param {ResourceType} resource
-   * @param {object} _data - Downloaded data
-   * @param {number} duration - Duration in milliseconds.
-   */
-  onResourceDownload (resource, _data, duration) {
-    resource.log('info', '> GET in', duration, 'ms')
-  }
-
-  /**
-   * Called when the resource is patched.
-   * @param {ResourceType} resource
-   * @param {object} _data - Object returned from the API.
-   * @param {number} duration - Duration in milliseconds.
-   */
-  onResourcePatch (resource, _data, duration) {
-    resource.log('info', '> PATCH in', duration, 'ms')
-  }
-
-  /**
    * @param {string} level
    * @param  {...any} args
    */
@@ -88,4 +66,5 @@ export class Runtime extends EventEmitter {
 
 /**
  * @typedef { import("./Resource").Resource } Resource
+ * @typedef { import("./collections/TimerCollection").TimerCollection } TimerCollection
  */

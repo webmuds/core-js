@@ -24,9 +24,9 @@
     "eventemitter3": "4.0.7"
   },
   "devDependencies": {
-    "@dimensionalpocket/development": "github:dimensionalpocket/development-js#0.4.1",
+    "@dimensionalpocket/development": "github:dimensionalpocket/development-js#0.4.2",
     "@dimensionalpocket/release": "github:dimensionalpocket/release-js#0.2.3",
-    "@webmuds/api-client": "github:webmuds/api-client#0.2.1",
+    "@webmuds/api-client": "github:webmuds/api-client#0.2.2",
     "@webmuds/api-mock": "github:webmuds/api-mock#0.2.2"
   },
   "babel": {

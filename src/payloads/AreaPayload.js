@@ -12,8 +12,14 @@ export class AreaPayload extends Payload {
   n = null
 
   /**
-   * Area description, shown when players `examine area`.
+   * Area description, shown when players enter `examine area`.
    * @type {string}
    */
   d = null
+
+  /**
+   * Area map.
+   * @type {string}
+   */
+  m = null
 }

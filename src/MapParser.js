@@ -2,12 +2,18 @@
 
 'use strict'
 
-// A pattern to match: <r:roomId?trueString|falseString>
-const MARKER_TAG_REGEXP = /<x:([0-9]+)(?:\?((?:\|\||>>|[^|>\n\r])*)?(?:\|)?((?:>>|[^>\n\r])*)?)?>/gi
+// A pattern to match: <x:roomId?trueString|falseString>
+const TAG_OPENER = '<x:'
+const TAG_ENDER = '>'
+const TRUE_STRING_SEPARATOR = '?'
+const FALSE_STRING_SEPARATOR = '|'
+
+const MARKER_TAG_REGEXP = new RegExp(`${TAG_OPENER}([0-9]+)(?:\\${TRUE_STRING_SEPARATOR}((?:\\${FALSE_STRING_SEPARATOR}\\${FALSE_STRING_SEPARATOR}|${TAG_ENDER}${TAG_ENDER}|[^${FALSE_STRING_SEPARATOR}${TAG_ENDER}\\n\\r])*)?(?:\\${FALSE_STRING_SEPARATOR})?((?:${TAG_ENDER}${TAG_ENDER}|[^${TAG_ENDER}\\n\\r])*)?)?${TAG_ENDER}`, 'gi')
+const DOUBLE_FALSE_SEP_REGEXP = new RegExp(`[${FALSE_STRING_SEPARATOR}]{2}`, 'g')
+const DOUBLE_TAG_ENDER_REGEXP = new RegExp(`[${TAG_ENDER}]{2}`, 'g')
 
 export class MapParser {
   /**
-   *
    * @param {string} originalMap
    */
   constructor (originalMap) {
@@ -19,7 +25,7 @@ export class MapParser {
     this.original = originalMap
 
     /**
-     * The Room ID to place markers on. Can be null (no markers rendered).
+     * The Room ID to match markers against. Can be null (no markers rendered).
      * If -1, renders all markers. Useful to see all markers at once during map creation.
      *
      * @type {?number|string}
@@ -73,7 +79,7 @@ function replaceTags (_match, roomId, trueString = null, falseString = null) {
     if (trueString == null) {
       trueString = 'X'
     } else {
-      trueString = trueString.replace('||', '|').replace('>>', '>')
+      trueString = trueString.replace(DOUBLE_FALSE_SEP_REGEXP, FALSE_STRING_SEPARATOR).replace(DOUBLE_TAG_ENDER_REGEXP, TAG_ENDER)
     }
     return trueString
   }
@@ -81,7 +87,7 @@ function replaceTags (_match, roomId, trueString = null, falseString = null) {
   if (falseString == null) {
     falseString = ' '
   } else {
-    falseString = falseString.replace('>>', '>')
+    falseString = falseString.replace(DOUBLE_TAG_ENDER_REGEXP, TAG_ENDER)
   }
 
   return falseString

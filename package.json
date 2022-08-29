@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/webmuds/core-js#readme",
   "dependencies": {
-    "@dimensionalpocket/timer": "github:dimensionalpocket/timer-js#0.2.0",
+    "@dimensionalpocket/timer": "github:dimensionalpocket/timer-js#0.3.0",
     "eventemitter3": "4.0.7"
   },
   "devDependencies": {

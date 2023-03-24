@@ -25,7 +25,7 @@
   "devDependencies": {
     "@dimensionalpocket/development": "github:dimensionalpocket/development-js#0.7.0",
     "@dimensionalpocket/release": "github:dimensionalpocket/release-js#0.3.3",
-    "@webmuds/api-client": "github:webmuds/api-client#0.3.1",
+    "@webmuds/api-client": "github:webmuds/api-client#0.3.3",
     "@webmuds/api-mock": "github:webmuds/api-mock#0.2.2"
   },
   "babel": {
